@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Выбор набора СРЗИИ</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .selection-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+        .selection-container h2 {
+            margin-bottom: 20px;
+        }
+        .selection-container input {
+            margin-bottom: 10px;
+        }
+        .selection-container button {
+            padding: 10px;
+            width: 100%;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .logout-button {
+            margin-top: 10px;
+            background-color: #dc3545;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="selection-container">
+    <h2>Выберите набор СРЗИИ</h2>
+
+    <!-- Основные пункты -->
+    <form id="srziForm">
+        <label>
+            <input type="checkbox" name="set" value="КИИ" id="kii"> КИИ
+        </label><br>
+        <label>
+            <input type="checkbox" name="set" value="ИСПДн" id="ispdn"> ИСПДн
+        </label><br>
+        <label>
+            <input type="checkbox" name="set" value="ГИС" id="gis"> ГИС
+        </label><br>
+        <label>
+            <input type="checkbox" name="set" value="Другое" id="smth"> Другое
+        </label><br>
+
+        <!-- Дополнительные параметры для КИИ -->
+        <div id="kii-options" class="hidden">
+            <h3>Выберите КЗ для КИИ:</h3>
+            <label><input type="checkbox" name="kii-level" value="КЗ 1"> КЗ 1</label><br>
+            <label><input type="checkbox" name="kii-level" value="КЗ 2"> КЗ 2</label><br>
+            <label><input type="checkbox" name="kii-level" value="КЗ 3"> КЗ 3</label><br>
+            <label><input type="checkbox" name="kii-level" value="КЗ 4"> Нет  информации</label><br>
+        </div>
+
+        <!-- Дополнительные параметры для ИСПДн -->
+        <div id="ispdn-options" class="hidden">
+            <h3>Выберите УЗ для ИСПДн:</h3>
+            <label><input type="checkbox" name="ispdn-level" value="УЗ 1"> УЗ 1</label><br>
+            <label><input type="checkbox" name="ispdn-level" value="УЗ 2"> УЗ 2</label><br>
+            <label><input type="checkbox" name="ispdn-level" value="УЗ 3"> УЗ 3</label><br>
+            <label><input type="checkbox" name="ispdn-level" value="УЗ 4"> УЗ 4</label><br>
+        </div>
+
+        <!-- Дополнительные параметры для ГИСС -->
+        <div id="gis-options" class="hidden">
+            <h3>Выберите Класс для ГИСС:</h3>
+            <label><input type="checkbox" name="gis-level" value="Класс 1"> Класс 1</label><br>
+            <label><input type="checkbox" name="gis-level" value="Класс 2"> Класс 2</label><br>
+            <label><input type="checkbox" name="gis-level" value="Класс 3"> Класс 3</label><br>
+        </div>
+
+        <!-- Дополнительные параметры для Другое -->
+        <div id="smth-options" class="hidden">
+            <h3>Выберите что-то:</h3>
+            <!-- Уровень зрелости -->
+            <label for="maturity">Уровень зрелости:</label>
+            <select id="maturity" name="maturity">
+                <option value="Базовый">Базовый</option>
+                <option value="Средний">Средний</option>
+                <option value="Высокий">Высокий</option>
+                <option value="Продвинутый">Продвинутый</option>
+            </select>
+            <br><br>
+
+        </div>
+
+        <br>
+        <button type="submit">Подтвердить выбор</button>
+    </form>
+
+    <!-- Кнопка для выхода -->
+    <button class="logout-button" onclick="logout()">Выйти</button>
+</div>
+
+<script>
+    // Проверка состояния входа
+    if (localStorage.getItem("loggedIn") !== "true") {
+        window.location.href = "login.html";
+    }
+
+    // Логика отображения дополнительных параметров в зависимости от выбора
+    document.getElementById("kii").addEventListener("change", function () {
+        document.getElementById("kii-options").classList.toggle("hidden", !this.checked);
+    });
+
+    document.getElementById("ispdn").addEventListener("change", function () {
+        document.getElementById("ispdn-options").classList.toggle("hidden", !this.checked);
+    });
+
+    document.getElementById("gis").addEventListener("change", function () {
+        document.getElementById("gis-options").classList.toggle("hidden", !this.checked);
+    });
+
+    document.getElementById("smth").addEventListener("change", function () {
+        document.getElementById("smth-options").classList.toggle("hidden", !this.checked);
+    });
+
+    // Функция выхода
+    function logout() {
+        localStorage.removeItem("loggedIn"); // Удаление состояния входа
+        window.location.href = "login.html"; // Перенаправление на страницу входа
+    }
+</script>
+
+</body>
+</html>
+
