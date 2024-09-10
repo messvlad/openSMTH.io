@@ -68,28 +68,29 @@
         <!-- Дополнительные параметры для КИИ -->
         <div id="kii-options" class="hidden">
             <h3>Выберите КЗ для КИИ:</h3>
-            <label><input type="checkbox" name="kii-level" value="КЗ 1"> КЗ 1</label><br>
-            <label><input type="checkbox" name="kii-level" value="КЗ 2"> КЗ 2</label><br>
-            <label><input type="checkbox" name="kii-level" value="КЗ 3"> КЗ 3</label><br>
-            <label><input type="checkbox" name="kii-level" value="no info kii"> Нет  информации</label><br>
+            <label><input type="checkbox" name="kii-level" value="КЗ 1" class="kii-checkbox"> КЗ 1</label><br>
+            <label><input type="checkbox" name="kii-level" value="КЗ 2" class="kii-checkbox"> КЗ 2</label><br>
+            <label><input type="checkbox" name="kii-level" value="КЗ 3" class="kii-checkbox"> КЗ 3</label><br>
+            <label><input type="checkbox" name="kii-level" value="no info kii" class="no-info"> Нет информации</label><br>
         </div>
 
         <!-- Дополнительные параметры для ИСПДн -->
         <div id="ispdn-options" class="hidden">
             <h3>Выберите УЗ для ИСПДн:</h3>
-            <label><input type="checkbox" name="ispdn-level" value="УЗ 1"> УЗ 1</label><br>
-            <label><input type="checkbox" name="ispdn-level" value="УЗ 2"> УЗ 2</label><br>
-            <label><input type="checkbox" name="ispdn-level" value="УЗ 3"> УЗ 3</label><br>
-            <label><input type="checkbox" name="ispdn-level" value="УЗ 4"> УЗ 4</label><br>
-            <label><input type="checkbox" name="kii-level" value="no info ispdn"> Нет  информации</label><br>
+            <label><input type="checkbox" name="ispdn-level" value="УЗ 1" class="ispdn-checkbox"> УЗ 1</label><br>
+            <label><input type="checkbox" name="ispdn-level" value="УЗ 2" class="ispdn-checkbox"> УЗ 2</label><br>
+            <label><input type="checkbox" name="ispdn-level" value="УЗ 3" class="ispdn-checkbox"> УЗ 3</label><br>
+            <label><input type="checkbox" name="ispdn-level" value="УЗ 4" class="ispdn-checkbox"> УЗ 4</label><br>
+            <label><input type="checkbox" name="ispdn-level" value="no info ispdn" class="no-info"> Нет информации</label><br>
         </div>
 
-        <!-- Дополнительные параметры для ГИСС -->
+        <!-- Дополнительные параметры для ГИС -->
         <div id="gis-options" class="hidden">
             <h3>Выберите Класс для ГИС:</h3>
-            <label><input type="checkbox" name="gis-level" value="Класс 1"> Класс 1</label><br>
-            <label><input type="checkbox" name="gis-level" value="Класс 2"> Класс 2</label><br>
-            <label><input type="checkbox" name="gis-level" value="Класс 3"> Класс 3</label><br>
+            <label><input type="checkbox" name="gis-level" value="Класс 1" class="gis-checkbox"> Класс 1</label><br>
+            <label><input type="checkbox" name="gis-level" value="Класс 2" class="gis-checkbox"> Класс 2</label><br>
+            <label><input type="checkbox" name="gis-level" value="Класс 3" class="gis-checkbox"> Класс 3</label><br>
+            <label><input type="checkbox" name="gis-level" value="no info gis" class="no-info"> Нет информации</label><br>
         </div>
 
         <!-- Дополнительные параметры для Другое -->
@@ -138,6 +139,26 @@
         document.getElementById("smth-options").classList.toggle("hidden", !this.checked);
     });
 
+    // Функция блокировки выбора при выборе "Нет информации"
+    document.querySelectorAll(".no-info").forEach(function (checkbox) {
+        checkbox.addEventListener("change", function () {
+            let parentDiv = this.closest("div");
+            let checkboxes = parentDiv.querySelectorAll("input[type='checkbox']:not(.no-info)");
+
+            // Если выбрано "Нет информации", отключаем остальные чекбоксы
+            if (this.checked) {
+                checkboxes.forEach(function (cb) {
+                    cb.checked = false;
+                    cb.disabled = true;
+                });
+            } else {
+                checkboxes.forEach(function (cb) {
+                    cb.disabled = false;
+                });
+            }
+        });
+    });
+
     // Функция выхода
     function logout() {
         localStorage.removeItem("loggedIn"); // Удаление состояния входа
@@ -147,4 +168,3 @@
 
 </body>
 </html>
-
